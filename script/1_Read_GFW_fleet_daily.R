@@ -7,6 +7,9 @@ library(ggplot2)
 
 rm(list = ls())
 
+# first download GFW files from Google Drive folder
+# https://drive.google.com/drive/folders/13jvlzDvJqhFxCTrrv-osajmosKL6fAmv?usp=sharing
+
 fv = read_csv("G:/GFW/fishing-vessels-v2.csv")
 
 daily_list = list.files("G:/GFW/fleet-daily-csvs-100-v2-2020/", pattern = ".csv")
