@@ -41,7 +41,7 @@ for (i in 1:length(daily_list)) {
   
   df_i$cell_ll_lon = ifelse(df_i$cell_ll_lon < 0, df_i$cell_ll_lon + 360, df_i$cell_ll_lon)
   
-  df_i = df_i %>% subset(cell_ll_lon > 180 & cell_ll_lon < 188 & cell_ll_lat > -8 & cell_ll_lat < 8 )
+  df_i = df_i %>% subset(cell_ll_lon > 183 & cell_ll_lon < 184 & cell_ll_lat > -1 & cell_ll_lat < 1 )
   
   # plot(df_i$cell_ll_lon, df_i$cell_ll_lat)
   # points(sm$lon, sm$lat, col = 2)
@@ -62,7 +62,7 @@ df %>%
   group_by(cell_ll_lon, cell_ll_lat, geartype) %>% 
   summarise(fishing_hours = mean(fishing_hours, na.rm = T),
             hours = mean(hours, na.rm = T)) %>% 
-  subset(fishing_hours > 0) %>%
+  # subset(fishing_hours > 0) %>%
   ggplot() + 
   geom_point(aes(cell_ll_lon, cell_ll_lat, color = fishing_hours, fill = fishing_hours, size = fishing_hours), shape = 21, alpha = 0.5) + 
   scale_fill_viridis_c("") + 
