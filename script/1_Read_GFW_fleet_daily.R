@@ -4,8 +4,12 @@ library(raster)
 library(dplyr)
 library(data.table)
 library(ggplot2)
+library(doParallel)
 
 rm(list = ls())
+
+cores = detectCores()/2
+registerDoParallel(cores = cores)
 
 # first download GFW files from Google Drive folder and unzip them on your G drive
 # https://drive.google.com/drive/folders/13jvlzDvJqhFxCTrrv-osajmosKL6fAmv?usp=sharing
@@ -20,7 +24,7 @@ sm$lon = ifelse(sm$lon < 0, sm$lon + 360, sm$lon)
 
 df = vector("list")
 
-for (i in 1:length(daily_list)) {
+r = foreach(i = 1:length(daily_list), .combine = rbind, .packages = c('dplyr', 'readr')) %dopar% {
   
   # i = 1
   
@@ -33,8 +37,8 @@ for (i in 1:length(daily_list)) {
   # plot(df_i$cell_ll_lon, df_i$cell_ll_lat)
   # points(sm$lon, sm$lat, col = 2)
 
-  df[[i]] = df_i
-  # print(i)
+  # df[[i]] = df_i
+  df_i
   
 }
 
