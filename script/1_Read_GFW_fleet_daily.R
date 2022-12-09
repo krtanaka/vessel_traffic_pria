@@ -14,22 +14,9 @@ fv = read_csv("G:/GFW/fishing-vessels-v2.csv")
 
 daily_list = list.files("G:/GFW/fleet-daily_2012_2020/", pattern = ".csv")
 
-# https://marineregions.org/gazetteer.php?p=details&id=26866
-mpa = raster("data/mpa/MarineRegions-worldheritagemarineprogramme.tif")
-mpa = rasterToPoints(mpa) %>% as.data.frame()
-mpa$x = ifelse(mpa$x < 0, mpa$x + 360, mpa$x)
-colnames(mpa)[3] = "z"
-
-mpa = mpa %>% subset(z != 255L)
-# mpa = mpa %>% subset(z == 153L)
-
-mpa$z = "mpa"
-
-ggplot() + 
-  geom_raster(data = mpa, aes(x, y, fill = factor(z))) + 
-  scale_fill_viridis_d()
-
-load("data/SURVEY_MASTER.RData"); sm = df %>% subset(island %in% c("Howland", "Baker")); sm$lon = ifelse(sm$lon < 0, sm$lon + 360, sm$lon)
+load("data/SURVEY_MASTER.RData")
+sm = df %>% subset(island %in% c("Howland", "Baker"))
+sm$lon = ifelse(sm$lon < 0, sm$lon + 360, sm$lon)
 
 df = vector("list")
 
@@ -54,18 +41,3 @@ for (i in 1:length(daily_list)) {
 df = rbindlist(df)
 
 save(df, file = "data/gfw/fleet_daily_2012-2020.rdata")
-
-df %>% 
-  mutate(year = lubridate::year(date), 
-         month = lubridate::month(date), 
-         day = lubridate::day(date)) %>% 
-  group_by(cell_ll_lon, cell_ll_lat, geartype) %>% 
-  summarise(fishing_hours = mean(fishing_hours, na.rm = T),
-            hours = mean(hours, na.rm = T)) %>% 
-  # subset(fishing_hours > 0) %>%
-  ggplot() + 
-  geom_point(aes(cell_ll_lon, cell_ll_lat, color = fishing_hours, fill = fishing_hours, size = fishing_hours), shape = 21, alpha = 0.5) + 
-  scale_fill_viridis_c("") + 
-  scale_color_viridis_c("") + 
-  geom_raster(data = mpa, aes(x, y), fill = "blue", alpha = 0.3) + 
-  facet_wrap(~geartype)
