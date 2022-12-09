@@ -35,9 +35,6 @@ df = foreach(i = 1:length(daily_list), .combine = rbind, .packages = c('dplyr', 
   
   df_i = df_i %>% subset(cell_ll_lon > -177.5 & cell_ll_lon < -175.5 & cell_ll_lat > -0.5 & cell_ll_lat < 1.5 )
   
-  # plot(df_i$cell_ll_lon, df_i$cell_ll_lat)
-  # points(sm$lon, sm$lat, col = 2)
-  
   # df[[i]] = df_i
   df_i
   
