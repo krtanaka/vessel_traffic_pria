@@ -99,15 +99,17 @@ df = df %>%
   summarise(fishing_hours = median(fishing_hours, na.rm = T),
             hours = median(hours, na.rm = T)) 
 
-geartype = unique(df$geartype)
+geartypes = unique(df$geartype)
 
-for (g in 1:length(geartype)) {
+for (g in 1:length(geartypes)) {
+  
+  # g = 3
   
   df_i = df %>% 
-    # subset(hours > 0) %>% 
-    subset(geartype == geartype[g])
+    # subset(hours > 0) %>%
+    subset(geartype == geartypes[g])
   
-  png(paste0("outputs/map_gfw_", geartype[g], ".png"), height = 7, width = 7, res = 500, units = "in")
+  png(paste0("outputs/map_gfw_", geartypes[g], ".png"), height = 7, width = 7, res = 500, units = "in")
   
   
   print(ggplot() + 
@@ -136,5 +138,3 @@ for (g in 1:length(geartype)) {
   dev.off()
   
 }
-
-
