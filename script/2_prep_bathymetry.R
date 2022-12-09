@@ -11,21 +11,29 @@ library(tidyr)
 library(marmap)
 library(lattice)
 
-bathy = raster("data/bathymetry/pibhmc_bathy_40m_baker_7fdc_4612_8e42.nc")
-bathy = raster("data/bathymetry/pibhmc_bathy_40m_howland_d150_f94a_6f03.nc")
+island = c("haw", "bak")
 
-if(min(values(bathy), na.rm = T) <= 0) {
+for (i in 1:length(island)) {
   
-  bathy[bathy <= -1000] <- NA
-  bathy[bathy >= 0] <- NA  
+  if (island[i] == "bak") bathy = raster("data/bathymetry/pibhmc_bathy_40m_baker_7fdc_4612_8e42.nc")
+  if (island[i] == "haw") bathy = raster("data/bathymetry/pibhmc_bathy_40m_howland_d150_f94a_6f03.nc")
+  
+  if(min(values(bathy), na.rm = T) <= 0) {
+    
+    bathy[bathy <= -1500] <- NA
+    bathy[bathy >= 0] <- NA  
+    
+  }
+  
+  bathy = readAll(bathy)
+  plot(bathy)
+  
+  if (island[i] == "bak") save(bathy, file = 'data/bathymetry/bathymetry_0-1000m_bak.RData')
+  if (island[i] == "haw") save(bathy, file = 'data/bathymetry/bathymetry_0-1000m_how.RData')
   
 }
 
-bathy = readAll(bathy)
-plot(bathy)
 
-save(bathy, file = 'data/bathymetry/bathymetry_0-1000m_bak.RData')
-save(bathy, file = 'data/bathymetry/bathymetry_0-1000m_how.RData')
 
 levelplot(bathy)
 

@@ -26,7 +26,7 @@ for (i in 1:length(daily_list)) {
   
   df_i = read_csv(paste0("G:/GFW/fleet-daily_2012_2020/", daily_list[i]))
   
-  df_i$cell_ll_lon = ifelse(df_i$cell_ll_lon < 0, df_i$cell_ll_lon + 360, df_i$cell_ll_lon)
+  # df_i$cell_ll_lon = ifelse(df_i$cell_ll_lon < 0, df_i$cell_ll_lon + 360, df_i$cell_ll_lon)
   
   df_i = df_i %>% subset(cell_ll_lon > 183 & cell_ll_lon < 184 & cell_ll_lat > -1 & cell_ll_lat < 1 )
   
@@ -34,7 +34,7 @@ for (i in 1:length(daily_list)) {
   # points(sm$lon, sm$lat, col = 2)
 
   df[[i]] = df_i
-  print(i)
+  # print(i)
   
 }
 
