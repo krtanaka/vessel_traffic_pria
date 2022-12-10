@@ -120,8 +120,8 @@ for (g in 1:length(geartypes)) {
     ggplot() + 
       
       geom_point(data = df_i, aes(cell_ll_lon, cell_ll_lat, color = hours, fill = hours, size = hours), shape = 21, alpha = 0.5) + 
-      scale_color_gradientn(colours = matlab.like(10), guide = "legend") +
-      scale_fill_gradientn(colours = matlab.like(10), guide = "legend") +
+      scale_color_gradientn(colours = matlab.like(100), guide = "legend") +
+      scale_fill_gradientn(colours = matlab.like(100), guide = "legend") +
       
       guides(fill = guide_legend(override.aes = list(linetype = 0)),
              color = guide_legend(override.aes = list(linetype = 0))) + 
