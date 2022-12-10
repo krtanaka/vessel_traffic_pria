@@ -69,7 +69,7 @@ dev.off()
 # Phoenix island MPA (https://marineregions.org/gazetteer.php?p=details&id=26866)
 mpa = raster("data/mpa/MarineRegions-worldheritagemarineprogramme.tif")
 mpa = rasterToPoints(mpa) %>% as.data.frame()
-mpa$x = ifelse(mpa$x < 0, mpa$x + 360, mpa$x)
+# mpa$x = ifelse(mpa$x < 0, mpa$x + 360, mpa$x)
 colnames(mpa)[3] = "z"
 mpa = mpa %>% subset(z != 255L)
 # mpa = mpa %>% subset(z == 153L)
@@ -119,7 +119,7 @@ for (g in 1:length(geartypes)) {
   print(
     ggplot() + 
       
-      geom_point(data = df_i, aes(cell_ll_lon, cell_ll_lat, color = hours, fill = hours, size = hours), shape = 21, alpha = 0.5) + 
+      geom_point(data = df_i, aes(cell_ll_lon, cell_ll_lat, color = hours, fill = hours, size = hours), shape = 21, alpha = 0.8) + 
       scale_color_gradientn(colours = matlab.like(100), guide = "legend") +
       scale_fill_gradientn(colours = matlab.like(100), guide = "legend") +
       
@@ -155,7 +155,8 @@ for (g in 1:length(geartypes)) {
       coord_sf(crs = 4326) +
       scale_x_continuous("", expand = c(0,0)) +
       scale_y_continuous("", expand = c(0,0)) +
-      theme_minimal())
+      theme_minimal()
+  )
   
   dev.off()
   
