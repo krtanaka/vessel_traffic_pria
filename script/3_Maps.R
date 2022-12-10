@@ -12,6 +12,7 @@ library(dplyr)
 library(ggplot2)
 library(ggrepel)
 library(ggspatial)
+library(colorRamps)
 
 rm(list = ls())
 
