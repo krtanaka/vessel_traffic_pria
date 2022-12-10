@@ -24,7 +24,7 @@ harp = data_frame(x = -176.6448,
 print(ggplot() + 
         geom_raster(data = bathy, aes(x, y, fill = elevation)) + 
         scale_fill_gradientn(colors = matlab.like(100), "Depth (m)") + 
-        geom_point(data = harp, aes(x, y, fill = 2), shape = 22, size = 5) + 
+        geom_point(data = harp, aes(x, y, fill = 2), shape = 22, size = 3) + 
         geom_label_repel(data = harp,
                          aes(x, y, label = "HARP site \n\ 4/20/2017 - 1/28/2018"),
                          fontface = 'bold',
