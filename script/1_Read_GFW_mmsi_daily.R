@@ -68,16 +68,4 @@ annual_fh = rbindlist(annual_fh)
 
 df = annual_fh
 
-df %>% 
-  subset(year %in% c(2012, 2020)) %>%
-  # na.omit() %>%
-  # subset(annual_fishing_hours > 0) %>%
-  ggplot(aes(cell_ll_lon, cell_ll_lat)) + 
-  geom_raster(aes(fill = sqrt(engine_power_kw_inferred),
-                 color = sqrt(engine_power_kw_inferred))) +
-  scale_fill_viridis_c("") +
-  scale_color_viridis_c("") + 
-  facet_wrap(~year) + 
-  coord_fixed()
-
 save(df, file = "data/gfw/mmsi-daily_2012_2020.rdata")
