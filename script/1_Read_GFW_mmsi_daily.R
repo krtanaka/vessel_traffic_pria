@@ -71,10 +71,10 @@ df = annual_fh
 df %>% 
   subset(year %in% c(2012, 2020)) %>%
   # na.omit() %>%
-  subset(annual_fishing_hours > 0) %>%
+  # subset(annual_fishing_hours > 0) %>%
   ggplot(aes(cell_ll_lon, cell_ll_lat)) + 
-  geom_raster(aes(fill = sqrt(annual_fishing_hours),
-                 color = sqrt(annual_fishing_hours))) +
+  geom_raster(aes(fill = sqrt(engine_power_kw_inferred),
+                 color = sqrt(engine_power_kw_inferred))) +
   scale_fill_viridis_c("") +
   scale_color_viridis_c("") + 
   facet_wrap(~year) + 
