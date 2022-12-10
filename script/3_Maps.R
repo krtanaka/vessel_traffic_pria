@@ -161,3 +161,38 @@ for (g in 1:length(geartypes)) {
   dev.off()
   
 }
+
+# GFW daily mmsi data
+load("data/gfw/mmsi-daily_2012_2020.rdata")
+
+df %>% 
+  group_by(year, cell_ll_lon, cell_ll_lat) %>% 
+  summarise(engine_power_kw_inferred = mean(engine_power_kw_inferred, na.rm = T)) %>% 
+  # subset(year %in% c(2012, 2020)) %>%
+  # na.omit() %>%
+  # subset(annual_fishing_hours > 0) %>%
+  ggplot(aes(cell_ll_lon, cell_ll_lat)) + 
+  geom_raster(aes(fill = sqrt(engine_power_kw_inferred),
+                  color = sqrt(engine_power_kw_inferred))) +
+  scale_fill_viridis_c("engine_power_kw_inferred") +
+  scale_color_viridis_c("engine_power_kw_inferred") + 
+  # geom_contour(data = b,
+  #              aes(x = x, y = y, z = z, colour = stat(level)),
+  #              breaks = seq(-10000, 0, by = 200),
+  #              size = c(0.2),
+  #              alpha = 0.5,
+  #              show.legend = T) +
+  # geom_label_repel(data = label,
+  #                  aes(x = lon, y = lat, label = island),
+  #                  fontface = 'bold',
+  #                  label.size = 0.1, 
+  #                  alpha = 0.9, 
+  #                  label.padding = 0.5, 
+  #                  box.padding = 0.5, 
+  #                  point.padding = 0.1,
+  #                  seed = 1993) + 
+  facet_wrap(~year) + 
+  coord_sf(crs = 4326) +
+  scale_x_continuous("", expand = c(0,0)) +
+  scale_y_continuous("", expand = c(0,0)) +
+  theme_minimal()
