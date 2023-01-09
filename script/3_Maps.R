@@ -166,7 +166,7 @@ for (g in 1:length(geartypes)) {
 # GFW daily mmsi data
 load("data/gfw/mmsi-daily_2012_2020.rdata")
 
-png("outputs/gfw_map_engine_power_kw_inferred_2012-2020.png", height = 7, width = 7, res = 500, units = "in")
+png("outputs/gfw_map_engine_power_kw_inferred_2012-2020.png", height = 7, width = 10, res = 500, units = "in")
 
 (df %>%
     group_by(cell_ll_lon, cell_ll_lat) %>%
