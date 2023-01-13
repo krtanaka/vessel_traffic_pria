@@ -10,6 +10,7 @@ library(raster)
 library(tidyr)
 library(marmap)
 library(lattice)
+library(readr)
 
 island = c("haw", "bak")
 
@@ -30,5 +31,13 @@ for (i in 1:length(island)) {
   
   if (island[i] == "bak") save(bathy, file = 'data/bathymetry/bathymetry_0-1000m_bak.RData')
   if (island[i] == "haw") save(bathy, file = 'data/bathymetry/bathymetry_0-1000m_how.RData')
+  
+  bathy = rasterToPoints(bathy) %>% 
+    as.data.frame() %>% 
+    subset(elevation > -500) %>% 
+    mutate(elevation = ifelse(elevation > -250, "0-249.99 m", "250-500 m"))
+  
+  if (island[i] == "bak") write_csv(bathy, file = 'data/bathymetry/bathymetry_0-500_bak.csv')
+  if (island[i] == "haw") write_csv(bathy, file = 'data/bathymetry/bathymetry_0-500_how.csv')
   
 }
