@@ -21,6 +21,8 @@ daily_list = list.files("G:/GFW/fleet-daily_2012_2020/", pattern = ".csv")
 
 load("data/SURVEY_MASTER.RData")
 sm = df %>% subset(island %in% c("Howland", "Baker"))
+sm = df %>% subset(island %in% c("Guam"))
+
 # sm$lon = ifelse(sm$lon < 0, sm$lon + 360, sm$lon)
 
 # df = vector("list")
@@ -33,7 +35,10 @@ df = foreach(i = 1:length(daily_list), .combine = rbind, .packages = c('dplyr', 
   
   # df_i$cell_ll_lon = ifelse(df_i$cell_ll_lon < 0, df_i$cell_ll_lon + 360, df_i$cell_ll_lon)
   
-  df_i = df_i %>% subset(cell_ll_lon > -177.5 & cell_ll_lon < -175.5 & cell_ll_lat > -0.5 & cell_ll_lat < 1.5 )
+  df_i = df_i %>% subset(cell_ll_lon >= range(pretty(sm$lon))[1]-0.5 &
+                           cell_ll_lon <= range(pretty(sm$lon))[2]+0.5 & 
+                           cell_ll_lat >= range(pretty(sm$lat))[1]-0.5 &
+                           cell_ll_lat <= range(pretty(sm$lat))[2]+0.5 )
   
   # df[[i]] = df_i
   df_i
@@ -42,8 +47,13 @@ df = foreach(i = 1:length(daily_list), .combine = rbind, .packages = c('dplyr', 
 
 beepr::beep(2)
 
-plot(df$cell_ll_lon, df$cell_ll_lat)
-points(sm$lon, sm$lat, col = 2)
+ggplot() + 
+  geom_point(data = df, aes(cell_ll_lon, cell_ll_lat, fill = fishing_hours, color = fishing_hours, size = fishing_hours), shape = 21) + 
+  scale_color_viridis_c() + 
+  scale_fill_viridis_c() + 
+  geom_point(data = sm, aes(lon, lat)) + 
+  facet_wrap(~geartype) + 
+  annotation_map(map_data("world"))
 
 # df = rbindlist(df)
 
