@@ -42,6 +42,8 @@ print(ggplot() +
         theme_minimal() +
         theme(legend.position = c(0.1, 0.15)))
 
+# ggsave(last_plot(), filename = "outputs/map_how.png", height = 7, width = 7)
+
 dev.off()
 
 
