@@ -63,6 +63,8 @@ bathy = rasterToPoints(bathy) %>% as.data.frame()
     theme_minimal() +
     theme(legend.position = c(0.9, 0.9)))
 
+# ggsave(last_plot(), filename = "outputs/map_how.png", height = 7, width = 7)
+
 dev.off()
 
 
@@ -160,6 +162,8 @@ for (g in 1:length(geartypes)) {
       scale_y_continuous("", expand = c(0,0)) +
       theme_minimal()
   )
+  
+  # ggsave(last_plot(), filename = paste0("outputs/gfw_map_", geartypes[g], ".png"), height = 7, width = 7)
   
   dev.off()
   
